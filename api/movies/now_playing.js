@@ -1,17 +1,32 @@
 const TMDB_BASE = 'https://api.themoviedb.org/3';
 
+function buildSearchParams(query) {
+  const search = new URLSearchParams();
+
+  if (query) {
+    for (const [key, value] of Object.entries(query)) {
+      if (value == null) continue;
+      search.set(key, Array.isArray(value) ? value[0] : String(value));
+    }
+  }
+
+  if (!search.has('language')) search.set('language', 'ko-KR');
+  if (!search.has('region')) search.set('region', 'KR');
+  if (!search.has('page')) search.set('page', '1');
+
+  return search;
+}
+
 module.exports = async (req, res) => {
   const apiKey = process.env.TMDB_API_KEY;
 
   if (!apiKey) {
-    res.status(500).json({ error: 'TMDB_API_KEY 환경 변수가 설정되지 않았습니다.' });
-    return;
+    return res.status(500).json({
+      error: 'TMDB_API_KEY 환경 변수가 설정되지 않았습니다. Vercel Settings → Environment Variables에서 추가 후 Redeploy 하세요.',
+    });
   }
 
-  const search = new URLSearchParams(req.query);
-  if (!search.has('language')) search.set('language', 'ko-KR');
-  if (!search.has('region')) search.set('region', 'KR');
-  if (!search.has('page')) search.set('page', '1');
+  const search = buildSearchParams(req.query);
   search.set('api_key', apiKey);
 
   try {
@@ -19,8 +34,8 @@ module.exports = async (req, res) => {
     const data = await response.json();
 
     res.setHeader('Content-Type', 'application/json; charset=utf-8');
-    res.status(response.status).json(data);
+    return res.status(response.status).json(data);
   } catch {
-    res.status(502).json({ error: 'TMDB API 연결에 실패했습니다.' });
+    return res.status(502).json({ error: 'TMDB API 연결에 실패했습니다.' });
   }
 };

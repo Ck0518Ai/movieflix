@@ -79,12 +79,12 @@ function normalizeMovie(movie) {
 async function fetchMovies() {
   try {
     const response = await fetch(API_URL);
+    const data = await response.json();
 
     if (!response.ok) {
-      throw new Error(`API 요청 실패 (${response.status})`);
+      const detail = data.error || data.status_message || `API 요청 실패 (${response.status})`;
+      throw new Error(detail);
     }
-
-    const data = await response.json();
     allMovies = (data.results || []).map(normalizeMovie);
 
     if (allMovies.length === 0) {
