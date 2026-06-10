@@ -4,7 +4,7 @@ const fs = require('fs');
 const path = require('path');
 
 const PORT = 5500;
-const API_KEY = 'bb73a915971c64b5ba4459b6cb9eff5b';
+const API_KEY = process.env.TMDB_API_KEY || 'bb73a915971c64b5ba4459b6cb9eff5b';
 const TMDB_BASE = 'https://api.themoviedb.org/3';
 
 const MIME_TYPES = {
