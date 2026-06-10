@@ -40,6 +40,11 @@ const moviesHeading = document.getElementById('movies-heading');
 const hero = document.getElementById('hero');
 const header = document.querySelector('.header');
 const navLinks = document.querySelectorAll('.nav__link');
+const paywall = document.getElementById('paywall');
+const paywallBackdrop = document.getElementById('paywall-backdrop');
+const paywallClose = document.getElementById('paywall-close');
+const paywallPoster = document.getElementById('paywall-poster');
+const paywallTitle = document.getElementById('paywall-title');
 
 let allMovies = [];
 let currentTab = 'nowPlaying';
@@ -252,14 +257,62 @@ function createMovieCard(movie, isFeatured, rank) {
   meta.appendChild(date);
   meta.appendChild(rating);
 
+  playBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    openPaywall(movie);
+  });
+
+  card.addEventListener('click', () => openPaywall(movie));
+
   card.appendChild(posterWrap);
   card.appendChild(title);
   card.appendChild(meta);
 
-  card.addEventListener('click', () => setHero(movie));
-
   return card;
 }
+
+function openPaywall(movie) {
+  setHero(movie);
+  paywallTitle.textContent = movie.displayTitle;
+
+  if (movie.poster_path) {
+    paywallPoster.src = `${IMAGE_BASE}${movie.poster_path}`;
+    paywallPoster.alt = `${movie.displayTitle} 포스터`;
+    paywallPoster.hidden = false;
+  } else {
+    paywallPoster.hidden = true;
+  }
+
+  if (movie.backdrop_path) {
+    paywallBackdrop.style.backgroundImage = `url(${BACKDROP_BASE}${movie.backdrop_path})`;
+  } else {
+    paywallBackdrop.style.backgroundImage = 'none';
+  }
+
+  const bubble = paywall.querySelector('.paywall__bubble');
+  bubble.style.animation = 'none';
+  bubble.offsetHeight;
+  bubble.style.animation = '';
+
+  paywall.classList.add('paywall--open');
+  paywall.removeAttribute('hidden');
+  paywall.setAttribute('aria-hidden', 'false');
+  document.body.classList.add('paywall-open');
+}
+
+function closePaywall() {
+  paywall.classList.remove('paywall--open');
+  paywall.setAttribute('hidden', '');
+  paywall.setAttribute('aria-hidden', 'true');
+  document.body.classList.remove('paywall-open');
+}
+
+paywallClose.addEventListener('click', closePaywall);
+paywallBackdrop.addEventListener('click', closePaywall);
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && paywall.classList.contains('paywall--open')) closePaywall();
+});
 
 function showError(message) {
   if (loading) loading.remove();

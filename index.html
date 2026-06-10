@@ -50,6 +50,43 @@
     <p>&copy; 2026 MovieFlix. TMDB API 제공.</p>
   </footer>
 
+  <div class="paywall" id="paywall" hidden aria-hidden="true">
+    <div class="paywall__backdrop" id="paywall-backdrop"></div>
+    <div class="paywall__panel">
+      <button class="paywall__close" id="paywall-close" type="button" aria-label="닫기">&times;</button>
+
+      <div class="paywall__header">
+        <img class="paywall__poster" id="paywall-poster" src="" alt="">
+        <div>
+          <p class="paywall__label">지금 시청하려면</p>
+          <h2 class="paywall__title" id="paywall-title"></h2>
+        </div>
+      </div>
+
+      <div class="paywall__stage">
+        <div class="paywall__bubble">
+          <p class="paywall__bubble-text">돈 주고 봐야지!!</p>
+        </div>
+
+        <div class="paywall__character" aria-hidden="true">
+          <div class="character">
+            <div class="character__arm character__arm--left"></div>
+            <div class="character__arm character__arm--right"></div>
+            <div class="character__body">
+              <span class="character__eye character__eye--left"></span>
+              <span class="character__eye character__eye--right"></span>
+              <span class="character__mouth"></span>
+            </div>
+            <div class="character__leg character__leg--left"></div>
+            <div class="character__leg character__leg--right"></div>
+          </div>
+        </div>
+      </div>
+
+      <button class="paywall__cta" type="button">구독하고 시청하기</button>
+    </div>
+  </div>
+
   <script src="script.js"></script>
 </body>
 </html>
