@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>현재 상영 — MovieFlix</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="header">
+    <div class="header__inner">
+      <a href="#" class="logo">MovieFlix</a>
+      <nav class="nav">
+        <a href="#" class="nav__link nav__link--active" data-tab="nowPlaying">현재 상영</a>
+        <a href="#" class="nav__link" data-tab="popular">인기</a>
+        <a href="#" class="nav__link" data-tab="newRelease">신작</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" id="hero">
+      <div class="hero__overlay"></div>
+      <div class="hero__content">
+        <p class="hero__badge">현재 상영</p>
+        <h1 class="hero__title" id="hero-title">로딩 중...</h1>
+        <div class="hero__meta" id="hero-meta" hidden>
+          <span class="hero__date" id="hero-date"></span>
+          <span class="hero__rating" id="hero-rating"></span>
+        </div>
+        <p class="hero__overview" id="hero-overview"></p>
+      </div>
+    </section>
+
+    <section class="movies">
+      <h2 class="movies__heading" id="movies-heading">현재 상영 중인 영화</h2>
+      <div class="movies__grid" id="movie-list">
+        <div class="loading" id="loading">
+          <div class="loading__spinner"></div>
+          <p>영화를 불러오는 중...</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>&copy; 2026 MovieFlix. TMDB API 제공.</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
